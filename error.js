@@ -49,18 +49,18 @@ outputA().then(function(data){
 
 
 
-var randomMark = Math.floor(Math.random() * 100);
+///////
+var random = Math.floor(Math.random()* 100);
 
-let promise = new Promise(function(resolve, reject){
-    if(randomMark > 50){
-        resolve("good");
+var promisess = new Promise((resolve, reject) =>{
+    if(random >50){
+        resolve("reslove 50");
     }
-    else{
-        reject("No");
-    }
-});
+    reject('reject less than 50');
+})
 
-promise.then(
-    (result)=>
-    console.log(result);
-)
+promisess.then(()=>{
+    console.log("resolved");
+}).catch(()=>{
+    console.log("rejected");
+})
