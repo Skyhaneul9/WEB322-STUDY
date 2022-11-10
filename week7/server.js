@@ -9,7 +9,7 @@ app.engine(".hbs", handlebars.engine({extname: '.hbs'}));
 app.set('view engine', '.hbs');
 app.use(bodyParser.urlencoded({extended: true}));
 
-var sequelize = new Sequelize('database', 'user', 'password', {
+var obj = new Sequelize('database', 'user', 'password', {
     host: 'host',
     dialect: 'postgres',
     port: 5432,
@@ -19,15 +19,8 @@ var sequelize = new Sequelize('database', 'user', 'password', {
     query: { raw: true }
 });
 
-// Define a "Project" model
-
-var Project = sequelize.define('Project', {
-    id: Sequelize.INTEGER,
-    title: Sequelize.STRING,
-    description: Sequelize.TEXT
-});
-
-var Project = sequelize.define('Project', {
+// Define a "Book" model
+var Book = obj.define('Book', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true, // use "project_id" as a primary key
@@ -46,16 +39,17 @@ var Project = sequelize.define('Project', {
 // synchronize the Database with our models and automatically add the 
 // table if it does not exist
 
-sequelize.sync().then(function () {
+obj.sync().then(function () {
 
-    // create a new "Project" and add it to the database
-    Project.create({
+    // create a new "Book" and add it to the database
+    Book.create({
         firstname: 'alex',
         lastname: "wu",
-        username: "project",
-        description: 'First Project'
-    }).then(function (project) {
-        // you can now access the newly created Project via the variable project
+        username: "book1",
+        password: "skljfksdjf"
+        description: 'First Book'
+    }).then(function (book) {
+        // you can now access the newly created Book via the variable project
         console.log("success!")
     }).catch(function (error) {
         console.log("something went wrong!");
@@ -76,7 +70,7 @@ app.post("/login", function(req, res){
     }
     res.render("login", {data: LoginData, layout : false});
 
-    Project.findAll({
+    Book.findAll({
         attributes: ['username'],
         where: {
             username : loginData.username
